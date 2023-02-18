@@ -140,8 +140,11 @@ const cellClickHandler = board => {
                     const win = checkForWin(board);
                     if (win) {
 
-                        const message = "Win for " + (win === "X" ? "crosses" : "noughts");
-                        alertModal("Game Over", message, "New Game", () => { resetBoard(board); });
+                        setTimeout(() => {
+
+                            const message = "Win for " + (win === "X" ? "crosses" : "noughts");
+                            alertModal("Game Over", message, "New Game", () => { resetBoard(board); });
+                        }, 200);
                     }
                 }, 300);
             }
