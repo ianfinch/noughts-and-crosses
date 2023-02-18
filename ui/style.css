@@ -1,0 +1,103 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic");
+
+:root {
+    --width: 120px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: Roboto,Helvetica,Arial;
+    background: #fbfbfb;
+    color: #999;
+    text-align: center;
+    padding-top: 40px;
+}
+
+h1 {
+    margin-bottom: 60px;
+}
+
+input {
+    border: 1px solid #999;
+    border-radius: 4px;
+    padding: 2px 4px;
+    color: #999;
+}
+
+.info {
+    color: blue;
+    border-color: blue;
+    background: lightskyblue;
+}
+
+.success {
+    color: green;
+    border-color: green;
+    background: palegreen;
+}
+
+.warning {
+    color: goldenrod;
+    border-color: goldenrod;
+    background: lemonchiffon;
+}
+
+.error {
+    color: red;
+    border-color: red;
+    background: pink;
+}
+
+.X {
+    color: darkcyan;
+    font-weight: bold;
+}
+
+.O {
+    color: goldenrod;
+    font-weight: bold;
+}
+
+#noughts-and-crosses {
+    margin: 0 auto;
+    display: inline-grid;
+    grid-template-columns: repeat(3, var(--width));
+}
+
+#noughts-and-crosses div {
+    width: var(--width);
+    height: var(--width);
+    border: 2px solid #acacac;
+    font-size: var(--width);
+    line-height: var(--width);
+    cursor: pointer;
+}
+
+#noughts-and-crosses #cell1,
+#noughts-and-crosses #cell2,
+#noughts-and-crosses #cell3 {
+    border-top-width: 0px;
+}
+
+#noughts-and-crosses #cell3,
+#noughts-and-crosses #cell6,
+#noughts-and-crosses #cell9 {
+    border-right-width: 0px;
+}
+
+#noughts-and-crosses #cell7,
+#noughts-and-crosses #cell8,
+#noughts-and-crosses #cell9 {
+    border-bottom-width: 0px;
+}
+
+#noughts-and-crosses #cell1,
+#noughts-and-crosses #cell4,
+#noughts-and-crosses #cell7 {
+    border-left-width: 0px;
+}
