@@ -5,26 +5,58 @@
  */
 
 /**
+ * Decompose the board into possible lines
+ */
+const decomposeToLines = board => {
+
+    const lines = [[ { n: 0 }, { n : 1 }, { n : 2 } ],
+                   [ { n: 3 }, { n : 4 }, { n : 5 } ],
+                   [ { n: 6 }, { n : 7 }, { n : 8 } ],
+                   [ { n: 0 }, { n : 3 }, { n : 6 } ],
+                   [ { n: 1 }, { n : 4 }, { n : 7 } ],
+                   [ { n: 2 }, { n : 5 }, { n : 8 } ],
+                   [ { n: 0 }, { n : 4 }, { n : 8 } ],
+                   [ { n: 2 }, { n : 4 }, { n : 6 } ]];
+
+    return lines.map(line => line.map(cell => Object.assign(cell, { value: board[cell.n] })));
+};
+
+/**
+ * Convert a nought or a cross to a numeric value
+ */
+const glyphToValue = glyph => {
+
+    if (glyph === "X") {
+        return 1;
+    }
+
+    if (glyph === "O") {
+        return -1;
+    }
+
+    return 0;
+};
+
+/**
  * Check for a winner
  */
 const checkForWin = board => {
 
-    const lines = [board[0] === board[1] && board[1] === board[2] ? board[0] : "",
-                   board[3] === board[4] && board[4] === board[5] ? board[3] : "",
-                   board[6] === board[7] && board[7] === board[8] ? board[6] : "",
-                   board[0] === board[3] && board[3] === board[6] ? board[0] : "",
-                   board[1] === board[4] && board[4] === board[7] ? board[1] : "",
-                   board[2] === board[5] && board[5] === board[8] ? board[2] : "",
-                   board[0] === board[4] && board[4] === board[8] ? board[0] : "",
-                   board[2] === board[4] && board[4] === board[6] ? board[2] : ""];
+    const winner = decomposeToLines(board)
+                        .map(line => line.reduce((total, x) => total + glyphToValue(x.value), 0))
+                        .filter(x => Math.abs(x) === 3);
 
-    const winningLines = lines.filter(x => x);
+    if (winner.length === 0) {
 
-    if (winningLines.length === 0) {
         return null;
     }
 
-    return winningLines[0];
+    if (winner[0] > 0) {
+
+        return "crosses";
+    }
+
+    return "noughts";
 };
 
 /**
@@ -120,10 +152,10 @@ const cellClickHandler = board => {
             redraw(board);
 
             // Was that a winning move?
-            const win = checkForWin(board);
-            if (win) {
+            const winner = checkForWin(board);
+            if (winner) {
 
-                const message = "Win for " + (win === "X" ? "crosses" : "noughts");
+                const message = "Win for " + winner;
                 alertModal("Game Over", message, "New Game", () => { resetBoard(board); });
 
             // Was it a draw?
@@ -137,12 +169,12 @@ const cellClickHandler = board => {
                 setTimeout(() => {
 
                     opponentMoveRandom(board)
-                    const win = checkForWin(board);
-                    if (win) {
+                    const winner = checkForWin(board);
+                    if (winner) {
 
                         setTimeout(() => {
 
-                            const message = "Win for " + (win === "X" ? "crosses" : "noughts");
+                            const message = "Win for " + winner;
                             alertModal("Game Over", message, "New Game", () => { resetBoard(board); });
                         }, 200);
                     }
