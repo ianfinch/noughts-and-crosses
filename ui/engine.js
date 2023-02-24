@@ -78,36 +78,19 @@ const redraw = board => {
 };
 
 /**
- * Let the opponent make a random move
+ * Let the opponent make their move
  */
-const opponentMoveRandom = board => {
+const opponentMoves = board => {
 
-    // How many possible moves are there?
+    // Check that there is a move available
     const movesAvailable = board.filter(x => x === "").length;
     if (movesAvailable) {
 
-        // Pick one
-        const randomMove = Math.floor(movesAvailable * Math.random());
-
-        // Adjust the move to account for occupied squares
-        const adjusted = board.reduce((result, cell, i) => {
-
-            if (result.remaining === -1) {
-
-                return result;
-            }
-
-            if (cell === "") {
-
-                return Object.assign(result, { remaining: result.remaining - 1 });
-            }
-
-            return Object.assign(result, { offset: result.offset + 1 });
-
-        }, { remaining: randomMove, offset: randomMove });
+        // Find the move to make
+        const move = findBestMove(analyse(board));
 
         // Update the board
-        board[adjusted.offset] = "O";
+        board[move] = "O";
 
         // Redraw the board
         redraw(board);
@@ -168,7 +151,7 @@ const cellClickHandler = board => {
 
                 setTimeout(() => {
 
-                    opponentMoveRandom(board)
+                    opponentMoves(board)
                     const winner = checkForWin(board);
                     if (winner) {
 
@@ -205,6 +188,7 @@ const initBoard = () => {
  * Run initialisation after the page has loaded
  */
 document.addEventListener("DOMContentLoaded", () => {
+
     initModal();
     initBoard();
 });
