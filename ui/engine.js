@@ -86,11 +86,24 @@ const opponentMoves = board => {
     const movesAvailable = board.filter(x => x === "").length;
     if (movesAvailable) {
 
-        // Find the move to make
-        const move = findBestMove(analyse(board));
+        // Run analysis of the board to identify any lines
+        let data = analyse(board);
+
+        // Look for a winning move
+        data = checkForWinningLine(data);
+        if (data.result === null) {
+
+            // Do we need to block our opponent?
+            data = blockOpponent(data);
+            if (data.result === null) {
+
+                // Find the best move
+                data = findBestMove(data);
+            }
+        }
 
         // Update the board
-        board[move] = "O";
+        board[data.result] = "O";
 
         // Redraw the board
         redraw(board);

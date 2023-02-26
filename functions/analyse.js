@@ -55,5 +55,8 @@ const _addScoring = line => {
  */
 const analyse = board => {
 
-    return _decomposeToLines(board).map(_addScoring);
+    return {
+        result: null,
+        lines: _decomposeToLines(board).map(_addScoring)
+    };
 };

@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic");
 
 :root {
-    --width: 120px;
+    --width: 160px;
 }
 
 * {
@@ -15,10 +15,11 @@ body {
     background: #fbfbfb;
     color: #999;
     text-align: center;
-    padding-top: 40px;
+    padding-top: 30px;
 }
 
 h1 {
+    font-size: 42px;
     margin-bottom: 60px;
 }
 

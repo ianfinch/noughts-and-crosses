@@ -1,11 +1,10 @@
 /**
  * Find the best move, by finding the square with the most possible lines going through it
  */
-const findBestMove = lines => {
+const findBestMove = data => {
 
     // Find the highest weight possible
-    const weights = _findMaxima(lines);
-console.log(weights);
+    const weights = _findMaxima(data.lines);
     const maxWeight = weights.reduce((max, x) => x > max ? x : max, 0);
 
     // Find the first square with that weight
@@ -28,7 +27,7 @@ console.log(weights);
 
     }, -1);
 
-    return firstMatch;
+    return Object.assign(data, { result: firstMatch });
 };
 
 /**
